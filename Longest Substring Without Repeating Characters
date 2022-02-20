@@ -1,0 +1,27 @@
+int lengthOfLongestSubstring(string s) {
+        
+ 		if (s.empty()) return 0;
+
+ 		unordered_set<char> window;
+
+ 		int maxlen = 1;
+
+ 		auto begin = s.begin(), end = s.begin();
+
+ 		while(end!=s.end()){
+ 			char c = *end;
+ 			if (!window.count(c)){ //c does not exist in window
+ 				window.insert(c);
+ 				maxlen = max(maxlen,1+(int) distance(begin,end)); //update maxlen
+ 			}
+ 			else{ //c exists in the window, we have to shorten the window
+ 				while (window.count(c)){ //we have to find c and delete it
+ 					window.erase(*begin); //erase the first element in the window
+ 					++begin; //move the pointer upward
+ 				}
+ 				window.insert(c); //add it back to the window
+ 			}
+ 			++end; //attempt to increase length of window
+ 		}
+
+ 		return maxlen;
